@@ -2,7 +2,7 @@ import getLexxLink from "./get-lexx-link";
 import BinanceService from "./binance-service";
 import createOptions from "./create-options";
 
-async function backtestService(customTickers, settings, binds, minimalVolume = 20, minimalTradesCount, minimalPercentProfitableTrades, minimalProfitPercent, maximalDrawdown) {
+export default async function backtestService(customTickers, settings, binds, minimalVolume = 20, minimalTradesCount, minimalPercentProfitableTrades, minimalProfitPercent, maximalDrawdown) {
 
     const binance = new BinanceService();
     const allUsdtTickers = await binance.getTickers('USDT');
@@ -114,5 +114,3 @@ async function backtestService(customTickers, settings, binds, minimalVolume = 2
         })
     }
 }
-
-export default backtestService;

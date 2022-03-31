@@ -1,10 +1,11 @@
 import './app.css';
-import Backtest from '../backtest';
+import BacktestIntervalSettings from '../backtest-interval-settings';
 
 function App() {
   return (
     <div className="App">
-      <Backtest />
+      
+      <BacktestIntervalSettings />
     </div>
   );
 }

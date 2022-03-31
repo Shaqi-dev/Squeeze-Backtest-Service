@@ -38,9 +38,8 @@ export default function BasicNumberField({
                 maxLength: maxLength,
                 step: step,    
             },
-            onChange: (event) => handleChange(event)
         }}
-             
+        onChange={handleChange}       
         />
   );
 }

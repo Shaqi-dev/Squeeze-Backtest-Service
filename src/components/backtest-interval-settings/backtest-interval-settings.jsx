@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SecondaryButton } from "../ui-elements/buttons";
-import backtestService from "../../services/backtest-service";
+import { backtestService } from "../../services";
 import { CheckboxWithLabel, BasicSelect, BasicNumberField } from "../ui-elements/forms";
-import "./backtest.css";
+import "./backtest-interval-settings.css";
 
-function Backtest() {
+export default function BacktestIntervalSettings() {
 
 	const [settings, setSettings] = useState({
 		"1m": {
@@ -34,15 +34,14 @@ function Backtest() {
 	});
 
 	const activeIntervals = Object.keys(settings).filter(interval => settings[interval]['active'] === true)
+	
 	const getSettigns = () => {
 		const currentSettings = []
 		if (activeIntervals) {
 			activeIntervals.forEach(interval => currentSettings.push([interval, settings[interval]['range'], settings[interval]['configs'], settings[interval]['maxBars']]))
 		}
 		return currentSettings
-	} 
-
-	useEffect(() => console.log(getSettigns()));
+	}
 
 	const intervals = ["1m", "3m", "5m", "15m"];
 
@@ -74,12 +73,13 @@ function Backtest() {
 									...prevState[interval],
 									active: e.target.checked,
 								},
-							}))
+							}))				
 						}
 					/>
 				</div>
 				<div className="backtest-settings__form-item">
 					<BasicSelect
+						key={`${interval}-range`}
 						options={rangeOptions}
 						defaultValue={settings[interval]["range"]}
 						minWidth={120}
@@ -88,7 +88,7 @@ function Backtest() {
 								...prevState,
 								[interval]: {
 									...prevState[interval],
-									range: e.value,
+									range: e.target.value,
 								},
 							}))
 						}
@@ -96,6 +96,7 @@ function Backtest() {
 				</div>
 				<div className="backtest-settings__form-item">
 					<BasicSelect
+						key={`${interval}-configs`}
 						options={configOptions}
 						defaultValue={settings[interval]["configs"]}
 						minWidth={120}
@@ -104,7 +105,7 @@ function Backtest() {
 								...prevState,
 								[interval]: {
 									...prevState[interval],
-									configs: e.value,
+									configs: e.target.value,
 								},
 							}))
 						}
@@ -112,6 +113,7 @@ function Backtest() {
 				</div>
 				<div className="backtest-settings__form-item">
 					<BasicNumberField
+						key={`${interval}-max-bars`}
 						type="number"
 						defaultValue={settings[interval]["maxBars"]}
 						minValue={0}
@@ -150,7 +152,7 @@ function Backtest() {
 				className="time-settings__button"
 				onClick={() => {
 					backtestService(
-						0,
+						['JSTUSDT'],
 						getSettigns(),
 						["L", "C", "OC"],
 						20,
@@ -165,5 +167,3 @@ function Backtest() {
 		</>
 	);
 }
-
-export default Backtest;
