@@ -1,7 +1,8 @@
 import BasicSelect from "./basic-select.jsx";
-import Checkbox from "./checkbox.jsx";
+import CheckboxWithLabel from "./checkbox-with-label.jsx";
 
 export {
     BasicSelect,
-    Checkbox
+    CheckboxWithLabel
+
 };

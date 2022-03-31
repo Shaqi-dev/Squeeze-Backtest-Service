@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SecondaryButton } from "../ui-elements/buttons";
 import backtestService from "../../services/backtest-service";
-import { BasicSelect, Checkbox } from "../ui-elements/forms";
+import { BasicSelect, CheckboxWithLabel } from "../ui-elements/forms";
 import "./backtest.css";
 
 function Backtest() {
@@ -42,7 +42,7 @@ function Backtest() {
 		return currentSettings
 	} 
 
-	// useEffect(() => console.log(getSettigns()));
+	useEffect(() => console.log(getSettigns()), [settings]);
 
 	const intervals = ["1m", "3m", "5m", "15m"];
 
@@ -61,49 +61,12 @@ function Backtest() {
 		{ value: 'configsMR', label: "Medium Risk" },
 	];
 
-	const customStyles = {
-		container: (provided, state) => ({
-			...provided,
-			fontSize: "1.8rem",
-			fontFamily: "var(--fira)",
-			width: "180px",
-		}),
-		indicatorSeparator: (provided, state) => ({
-			display: "none",
-		}),
-		dropdownIndicator: (provided, state) => ({
-			...provided,
-			color: state.isSelected ? "var(--ocean-accent)" : "var(--ocean-light)",
-		}),
-		control: (provided, state) => ({
-			...provided,
-			backgroundColor: "var(--ocean-semi-dark)",
-			border: "none",
-		}),
-		menu: (provided, state) => ({
-			...provided,
-			backgroundColor: "var(--ocean-semi-dark)",
-		}),
-		option: (provided, state) => ({
-			...provided,
-			color: "var(--ocean-light)",
-		}),
-		singleValue: (provided, state) => ({
-			...provided,
-			color: "var(--ocean-light)",
-		}),
-		placeholder: (provided, state) => ({
-			...provided,
-			color: "var(--ocean-light)",
-		}),
-	};
-
 	const settingsForms = intervals.map((interval) => {
 		return (
 			<form id={interval} key={interval} className="backtest-settings__form">
 				<div className="backtest-settings__form-item">
-					<Checkbox
-						text={interval}
+					<CheckboxWithLabel
+						label={interval}
 						onClick={() =>
 							setSettings((prevState) => ({
 								...prevState,
