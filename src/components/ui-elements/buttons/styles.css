@@ -1,0 +1,22 @@
+.secondary-button {
+    font-family: var(--fira);
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.3rem;
+    background-color: transparent;
+    font-size: 1.6rem;
+    font-weight: 400; 
+    color: var(--ocean-accent);
+    border: solid var(--ocean-accent) 1px;
+    cursor: pointer; 
+    transition: all 80ms ease;
+}
+
+.secondary-button:disabled {
+    background-color: var(--disabled-light);
+    color: var(--disabled-dark-text);
+    cursor: default; 
+}
+
+.secondary-button:hover:not([disabled]) {
+    background-color: var(--ocean-accent-10);
+}
