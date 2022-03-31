@@ -5,32 +5,11 @@ html {
   }
 
 :root {
-  --ocean-primary: #8892b0;
-  --ocean-accent: #00ffbb;
-  --ocean-accent-50: rgb(0, 255, 187, 0.5);
-  --ocean-accent-30: rgb(0, 255, 187, 0.3);
-  --ocean-accent-10: rgba(0, 255, 187, 0.1);
-  --ocean-red: #fa8f7e;
-  --ocean-bg: #0C2131;
-  --ocean-dark: #051218;
-  --ocean-semi-dark: #0D1A24;
-  --ocean-light: #cadbe9;
-  --ocean-disabled: #3C5265;
-  --ocean-disabled-text: #88949e; 
-  --primary-light: #FFFFFF;
-  --secondary-light: #E3E3E3;
-  --disabled-light: #bbbbbb;
-  --primary-dark: #080808;
-  --secondary-dark: #141414;
-  --disabled-dark: #242424;
-  --disabled-dark-text: #505050;
-  --focus: #87A5E4;
-  --fira: 'Fira Code', monospace;
   --roboto: 'Roboto', sans-serif;
 }
 
 body {
-  font-family: 'Roboto', sans-serif, 'Fira Code', monospace;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   font-size: 2.4rem;
   box-sizing: border-box;
