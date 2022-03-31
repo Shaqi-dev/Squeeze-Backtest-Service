@@ -1,6 +1,6 @@
-import getLexxLink from "./getLexxService";
-import BinanceService from "./binanceService";
-import createOptions from "./createOptions";
+import getLexxLink from "./get-lexx-link";
+import BinanceService from "./binance-service";
+import createOptions from "./create-options";
 
 async function backtestService(customTickers, settings, binds, minimalVolume = 20, minimalTradesCount, minimalPercentProfitableTrades, minimalProfitPercent, maximalDrawdown) {
 

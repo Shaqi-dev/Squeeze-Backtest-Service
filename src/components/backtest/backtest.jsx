@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SecondaryButton } from "../ui-elements/buttons";
-import backtestService from "../../services/binanceBacktest/backtestService";
+import backtestService from "../../services/backtest-service";
 import { Input, Checkbox } from "../ui-elements/forms";
 import Select from "react-select";
 import "./backtest.css";

@@ -1,10 +1,10 @@
-import './App.css';
+import './app.css';
+import Backtest from '../backtest';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
+      <Backtest />
     </div>
   );
 }
