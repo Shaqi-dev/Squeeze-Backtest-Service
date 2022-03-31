@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { SecondaryButton } from "../ui-elements/buttons";
 import backtestService from "../../services/backtest-service";
-import { Input, Checkbox } from "../ui-elements/forms";
-import Select from "react-select";
+import { BasicSelect, Checkbox } from "../ui-elements/forms";
 import "./backtest.css";
 
 function Backtest() {
@@ -117,15 +116,10 @@ function Backtest() {
 					/>
 				</div>
 				<div className="backtest-settings__form-item">
-					<Select
+					<BasicSelect
 						options={rangeOptions}
-						styles={customStyles}
-						defaultValue={{
-							value: settings[interval]["range"],
-							label: rangeOptions.filter(
-								(option) => option["value"] === settings[interval]["range"]
-							)[0]["label"],
-						}}
+						defaultValue={settings[interval]["range"]}
+						minWidth={120}
 						onChange={(e) =>
 							setSettings((prevState) => ({
 								...prevState,
@@ -138,15 +132,10 @@ function Backtest() {
 					/>
 				</div>
 				<div className="backtest-settings__form-item">
-					<Select
+					<BasicSelect
 						options={configOptions}
-						styles={customStyles}
-						defaultValue={{
-							value: settings[interval]["configs"],
-							label: configOptions.filter(
-								(option) => option["value"] === settings[interval]["configs"]
-							)[0]["label"],
-						}}
+						defaultValue={settings[interval]["configs"]}
+						minWidth={120}
 						onChange={(e) =>
 							setSettings((prevState) => ({
 								...prevState,
@@ -158,7 +147,7 @@ function Backtest() {
 						}
 					/>
 				</div>
-				<div className="backtest-settings__form-item">
+				{/* <div className="backtest-settings__form-item">
 					<Input
 						id="max-bars"
 						name=""
@@ -178,7 +167,7 @@ function Backtest() {
 							}))
 						}
 					/>
-				</div>
+				</div> */}
 			</form>
 		);
 	});
