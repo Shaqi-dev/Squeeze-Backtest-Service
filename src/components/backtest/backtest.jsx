@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SecondaryButton } from "../ui-elements/buttons";
 import backtestService from "../../services/backtest-service";
-import { BasicSelect, CheckboxWithLabel } from "../ui-elements/forms";
+import { CheckboxWithLabel, BasicSelect, BasicNumberField } from "../ui-elements/forms";
 import "./backtest.css";
 
 function Backtest() {
@@ -110,16 +110,15 @@ function Backtest() {
 						}
 					/>
 				</div>
-				{/* <div className="backtest-settings__form-item">
-					<Input
-						id="max-bars"
-						name=""
+				<div className="backtest-settings__form-item">
+					<BasicNumberField
 						type="number"
-						defValue={settings[interval]["maxBars"]}
+						defaultValue={settings[interval]["maxBars"]}
 						minValue={0}
 						maxValue={1000}
-						step={1}
+						minLength={1}
 						maxLength={4}
+						step={1}
 						onChange={(e) =>
 							setSettings((prevState) => ({
 								...prevState,
@@ -130,7 +129,7 @@ function Backtest() {
 							}))
 						}
 					/>
-				</div> */}
+				</div>
 			</form>
 		);
 	});
