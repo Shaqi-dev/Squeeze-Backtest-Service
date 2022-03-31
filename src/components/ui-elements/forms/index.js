@@ -1,7 +1,7 @@
-import Input from "./input.jsx";
+import BasicSelect from "./basic-select.jsx";
 import Checkbox from "./checkbox.jsx";
 
 export {
-    Input,
+    BasicSelect,
     Checkbox
 };
