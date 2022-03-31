@@ -4,5 +4,4 @@ import CheckboxWithLabel from "./checkbox-with-label.jsx";
 export {
     BasicSelect,
     CheckboxWithLabel
-
 };

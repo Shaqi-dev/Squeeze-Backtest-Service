@@ -42,7 +42,7 @@ function Backtest() {
 		return currentSettings
 	} 
 
-	useEffect(() => console.log(getSettigns()), [settings]);
+	useEffect(() => console.log(getSettigns()));
 
 	const intervals = ["1m", "3m", "5m", "15m"];
 
@@ -67,12 +67,12 @@ function Backtest() {
 				<div className="backtest-settings__form-item">
 					<CheckboxWithLabel
 						label={interval}
-						onClick={() =>
+						onChange={(e) =>
 							setSettings((prevState) => ({
 								...prevState,
 								[interval]: {
 									...prevState[interval],
-									active: !prevState[interval]["active"],
+									active: e.target.checked,
 								},
 							}))
 						}
