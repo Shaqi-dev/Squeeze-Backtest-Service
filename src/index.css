@@ -33,8 +33,6 @@ body {
   font-family: 'Roboto', sans-serif, 'Fira Code', monospace;
   font-weight: 300;
   font-size: 2.4rem;
-  background-color: var(--ocean-bg);
-  color: var(--ocean-primary);
   box-sizing: border-box;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -42,7 +40,6 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  color: var(--ocean-light);
   margin: 0;
 }
 
