@@ -49,19 +49,19 @@ export default async function backtestService(customTickers, settings, binds, mi
             case 'configsHR':
                 configs = createOptions(
                     [1.0, 4.0, 0.1],
-                    [0.8, 4.0, 0.1],
-                    [0.8, 4.0, 0.1],
-                    0.8,
-                    0.8
+                    [0.5, 4.0, 0.1],
+                    [0.5, 4.0, 0.1],
+                    0.5,
+                    1.5
                 );
                 break
             case 'configsMR':
                 configs = createOptions(
                     [3.0, 8.0, 0.2],
-                    [1.0, 8.0, 0.2],
-                    [1.0, 8.0, 0.2],
-                    0.8,
-                    0.8
+                    [0.8, 8.0, 0.2],
+                    [0.8, 8.0, 0.2],
+                    0.5,
+                    1.5
                 );
                 break
             default: configs = createOptions(

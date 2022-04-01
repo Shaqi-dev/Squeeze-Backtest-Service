@@ -9,7 +9,7 @@ export default function BacktestIntervalSettings() {
 	const [settings, setSettings] = useState({
 		"1m": {
 			active: false,
-			range: 'last24h',
+			range: 'last48h',
 			configs: 'configsHR',
 			maxBars: 15,
 		},
@@ -17,19 +17,19 @@ export default function BacktestIntervalSettings() {
 			active: false,
 			range: 'last48h',
 			configs: 'configsHR',
-			maxBars: 5,
+			maxBars: 10,
 		},
 		"5m": {
 			active: false,
 			range: 'last72h',
 			configs: 'configsMR',
-			maxBars: 6,
+			maxBars: 12,
 		},
 		"15m": {
 			active: false,
-			range: 'last1w',
+			range: 'last72h',
 			configs: 'configsMR',
-			maxBars: 4,
+			maxBars: 8,
 		},
 	});
 
@@ -152,14 +152,14 @@ export default function BacktestIntervalSettings() {
 				className="time-settings__button"
 				onClick={() => {
 					backtestService(
-						['JSTUSDT'],
+						0,
 						getSettigns(),
-						["L", "C", "OC"],
+						["O", "H", "L", "C", "HL", "OC"],
 						20,
 						5,
-						50,
+						60,
 						0,
-						-10
+						-5
 					);
 				}}
 				text="startBacktest()"
