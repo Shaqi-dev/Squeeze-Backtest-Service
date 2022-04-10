@@ -1,13 +1,16 @@
-import './app.css';
-import BacktestIntervalSettings from '../backtest-interval-settings';
+import React from 'react';
+import BacktestSettings from '../backtest-settings';
 
-function App() {
+import './app.css';
+
+function App(store) {
   return (
-    <div className="App">
-      
-      <BacktestIntervalSettings />
+    <div className="App">     
+      <BacktestSettings />
     </div>
   );
 }
 
 export default App;
+
+

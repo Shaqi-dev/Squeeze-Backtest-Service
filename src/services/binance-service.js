@@ -39,9 +39,8 @@ export default class BinanceService {
             "DOTDOWNUSDT",
             "TUSDUSDT",
             "USDPUSDT",
-            "SLPUSDT",
-            "LOKAUSDT",
-            "BTTUSDT"
+            "USTUSDT",
+            "USDCUSDT"
         ];
     }
 
@@ -412,13 +411,13 @@ export default class BinanceService {
                 }
                 
                 const rate = +Number(
-                    stats[0] * 0.2 
+                    stats[0] * 0.1 
                     + (stats[1] / stats[2]) * 0.2 
-                    + stats[3] * 0.05 
-                    + stats[4] * 0.05 
+                    + stats[3] * 0.1 
+                    + stats[4] * 0.05
                     - stats[5] * 0.1 
                     + stats[6] * 0.01 
-                    + stats[8] * 0.2
+                    + stats[8] * 0.25
                     + stats[9] * 0.5 
                     - (stats[10] > 1 ? stats[10] * 0.1 : 0)
                     - stats[11] * 0.01

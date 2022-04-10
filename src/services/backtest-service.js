@@ -6,7 +6,7 @@ export default async function backtestService(customTickers, settings, binds, mi
 
     const binance = new BinanceService();
     const allUsdtTickers = await binance.getTickers('USDT');
-    const tickersFilteredByVolume = await binance.filterTickersByVolume(customTickers ? customTickers : allUsdtTickers, minimalVolume)
+    const tickersFilteredByVolume = await binance.filterTickersByVolume(customTickers.length > 0 ? customTickers : allUsdtTickers, minimalVolume)
 
     const totalResults = [];
     
@@ -50,7 +50,7 @@ export default async function backtestService(customTickers, settings, binds, mi
                 configs = createOptions(
                     [1.0, 4.0, 0.1],
                     [0.5, 4.0, 0.1],
-                    [0.5, 4.0, 0.1],
+                    [0.5, 2.0, 0.1],
                     0.5,
                     1.5
                 );
@@ -59,7 +59,7 @@ export default async function backtestService(customTickers, settings, binds, mi
                 configs = createOptions(
                     [3.0, 8.0, 0.2],
                     [0.8, 8.0, 0.2],
-                    [0.8, 8.0, 0.2],
+                    [0.8, 4.0, 0.2],
                     0.5,
                     1.5
                 );
@@ -72,6 +72,8 @@ export default async function backtestService(customTickers, settings, binds, mi
                 0.8
             );
         }
+
+        console.log(configs.length)
 
         const intervalResults = [];
 

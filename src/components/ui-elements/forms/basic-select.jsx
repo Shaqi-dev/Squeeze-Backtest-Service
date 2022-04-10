@@ -12,7 +12,7 @@ export default function BasicSelect({ options, defaultValue, minWidth, onChange 
 	};
 
 	const menuItems = options.map((option) => {
-		return <MenuItem value={option.value}>{option.label}</MenuItem>;
+		return <MenuItem key={option.label} value={option.value}>{option.label}</MenuItem>;
 	});
 
 	return (

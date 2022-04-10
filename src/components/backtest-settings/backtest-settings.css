@@ -1,26 +1,26 @@
-.backtest-settings {
+.backtest-settings__intervals {
     margin-bottom: 4rem;
 }
 
-.backtest-settings__labels {
+.intervals-settings__labels {
     display: grid;
     grid-template-columns: 120px 200px 200px 120px;  
     margin-bottom: 3rem;
 }
 
-.backtest-settings__labels-item {
+.intervals-settings__labels-item {
     font-weight: 400;
     font-size: 2rem;
     color: var(--ocean-light); 
 }
 
-.backtest-settings__form {
+.intervals-settings__form {
     display: grid;
     grid-template-columns: 120px 200px 200px 120px;
     margin-top: 1rem;
 }
 
-.backtest-settings__form-item {
+.intervals-settings__item {
     display: inline-block;
     vertical-align: middle;
 }
