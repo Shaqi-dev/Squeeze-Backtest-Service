@@ -1,9 +1,10 @@
 import React from "react";
-import { CheckboxWithLabel, BasicSelect, BasicNumberField } from "../ui-elements/forms";
 import { useDispatch, useSelector } from "react-redux";
 import { setActivity, setRange, setConfigs, setMaxBars } from "../../store/intervals/intervals";
+import { CheckboxWithLabel, BasicSelect, BasicNumberField } from "../forms";
+import './settings-intervals.css';
 
-export default function IntervalsSettings({ interval, forceUpdate }) {
+export default function SettingsIntervals({ interval, forceUpdate }) {
     const dispatch = useDispatch();
 	const intervals = useSelector(state => state.intervals);
 
@@ -43,17 +44,17 @@ export default function IntervalsSettings({ interval, forceUpdate }) {
     } 
 
     return (
-        <form id={interval} key={interval} className="intervals-settings__form">
+        <form id={interval} key={interval} className="settings-intervals__form">
             <CheckboxWithLabel
                 key={`${interval}-active`}
                 label={interval}
-                className="intervals-setting__item"
+                className="settings-intervals__item"
                 onChange={(e) => handleChangeCheckbox(e)}
             />
             <BasicSelect
                 key={`${interval}-range`}
                 options={rangeOptions}
-                className="intervals-settings__item"
+                className="settings-intervals__item"
                 defaultValue={intervals[interval]["range"]}
                 minWidth={120}
                 onChange={(e) => handleChangeRange(e)}
@@ -61,7 +62,7 @@ export default function IntervalsSettings({ interval, forceUpdate }) {
             <BasicSelect
                 key={`${interval}-configs`}      
                 options={configOptions}
-                className="intervals-settings__item"
+                className="settings-intervals__item"
                 defaultValue={intervals[interval]["configs"]}
                 minWidth={120}
                 onChange={(e) => handleChangeConfigs(e)}
@@ -69,7 +70,7 @@ export default function IntervalsSettings({ interval, forceUpdate }) {
             <BasicNumberField
                 key={`${interval}-max-bars`}
                 type="number"
-                className='intervals-settings__item'
+                className='settings-intervals__item'
                 defaultValue={intervals[interval]["maxBars"]}
                 minValue={0}
                 maxValue={1000}

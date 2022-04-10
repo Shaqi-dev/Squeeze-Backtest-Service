@@ -2,7 +2,7 @@ import React from "react";
 import Button from '@mui/material/Button';
 import { backtestService } from '../../services';
 
-export default function BacktestSettingsControl({ activeIntervalsSettings }) {
+export default function SettingsControl({ activeIntervalsSettings }) {
 	
 	const binds = ["O", "H", "L", "C", "HL", "OC"];
 	const minimalVolume = 30;

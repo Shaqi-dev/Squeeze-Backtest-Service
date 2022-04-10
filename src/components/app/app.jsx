@@ -1,12 +1,12 @@
 import React from 'react';
-import BacktestSettings from '../backtest-settings';
+import Backtest from '../backtest';
 
 import './app.css';
 
 function App(store) {
   return (
     <div className="App">     
-      <BacktestSettings />
+      <Backtest />
     </div>
   );
 }

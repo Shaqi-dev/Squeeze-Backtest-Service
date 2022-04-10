@@ -1,0 +1,13 @@
+.backtest__intervals {
+  margin-bottom: 40px;
+}
+
+.settings-intervals__labels {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 120px 200px 200px 120px;
+      grid-template-columns: 120px 200px 200px 120px;
+  margin-bottom: 30px;
+  list-style: none;
+  padding: 0;
+}
