@@ -44,8 +44,6 @@ export default class BinanceService {
         ];
     }
 
-    
-
     getExchangeInfo = async () => {
         const res = await fetch(this._apiBaseExchange);
         
@@ -418,7 +416,7 @@ export default class BinanceService {
                     - stats[5] * 0.1 
                     + stats[6] * 0.01 
                     + stats[8] * 0.25
-                    + stats[9] * 0.5 
+                    + stats[9] * 0.5
                     - (stats[10] > 1 ? stats[10] * 0.1 : 0)
                     - stats[11] * 0.01
                     ).toFixed(2)

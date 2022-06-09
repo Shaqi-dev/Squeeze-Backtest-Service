@@ -1,6 +1,7 @@
 import React from "react";
 import Button from '@mui/material/Button';
 import { backtestService } from '../../services';
+import './settings-control.css'
 
 export default function SettingsControl({ activeIntervalsSettings }) {
 	
@@ -13,7 +14,7 @@ export default function SettingsControl({ activeIntervalsSettings }) {
 
 	const handleStartBacktest = () => {
 		backtestService(
-			['JASMYUSDT'],
+			['FLUXUSDT'],
 			activeIntervalsSettings,
 			binds,
 			minimalVolume,
@@ -29,17 +30,17 @@ export default function SettingsControl({ activeIntervalsSettings }) {
 	}
     
 	return (
-		<div className="backtest-control">
+		<div className="settings-control">
 			<Button
 				variant="contained"
-				className="time-settings__button"
+				className="settings-control__button"
 				onClick={handleStartBacktest}
 			>
 				Start Backtest
 			</Button>
 			<Button
-				variant="contained"
-				className="time-settings__button"
+				variant="outlined"
+				className="settings-control__button settings-control__button_outlined"
 				onClick={handleCheckSettings}
 			>
 				Check Settings
