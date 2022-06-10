@@ -1,3 +1,3 @@
-import SettingsIntervals from "./settings-intervals";
+import SettingsIntervals from './settings-intervals';
 
 export default SettingsIntervals;

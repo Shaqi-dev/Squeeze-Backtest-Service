@@ -1,9 +1,0 @@
-.settings-intervals__labels {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 120px 200px 200px 120px;
-      grid-template-columns: 120px 200px 200px 120px;
-  margin: 0;
-  padding: 20px 0;
-  list-style: none;
-}

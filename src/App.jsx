@@ -1,15 +1,12 @@
 import React from 'react';
-import Backtest from '../backtest';
-import './app.css';
+import Backtest from './components/backtest';
 
 function App() {
   return (
-    <div className="App">     
+    <div className="App">
       <Backtest />
     </div>
   );
 }
 
 export default App;
-
-

@@ -1,3 +1,3 @@
-import Backtest from "./backtest.jsx";
+import Backtest from './backtest';
 
 export default Backtest;
