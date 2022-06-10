@@ -1,9 +1,9 @@
 import getExchangeInfo from './getExchangeInfo';
 
 const getSymbols = async () => {
-  const info = await getExchangeInfo();
+  const data = await getExchangeInfo();
 
-  return info.symbols;
+  return data.symbols;
 };
 
 export default getSymbols;

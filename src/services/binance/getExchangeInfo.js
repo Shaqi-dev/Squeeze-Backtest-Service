@@ -1,13 +1,13 @@
+import axios from 'axios';
 import { API_EXCHANGE_INFO } from './api';
 
 const getExchangeInfo = async () => {
-  const res = await fetch(API_EXCHANGE_INFO);
-
-  if (!res.ok) {
-    throw new Error(`Couldn't fetch exchange info, received: ${res.status}`);
+  try {
+    const res = await axios.get(API_EXCHANGE_INFO);
+    return res.data;
+  } catch (error) {
+    throw new Error(`Couldn't fetch exchange info, received: ${error}`);
   }
-
-  return res.json();
 };
 
 export default getExchangeInfo;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import SettingsIntervals from '../settings-intervals';
+import BacktestSettings from '../backtestSettings';
 import SettingsControl from '../settings-control';
-import './backtest.scss';
+import './Backtest.scss';
 
 function Backtest() {
   const settings = useSelector((state) => state.settings);
@@ -17,7 +17,7 @@ function Backtest() {
 
   const intervalsSettingsForms = settings
     .map((setting) => (
-      <SettingsIntervals
+      <BacktestSettings
         key={setting.interval}
         setting={setting}
         forceUpdate={forceUpdate}

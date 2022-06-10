@@ -1,26 +1,25 @@
-// import getLexxLink from '../lexx/getLexxLink';
-import getConfigs from './getConfigs';
+import getLexxLink from '../lexx/getLexxLink';
+import getConfigs from './utils/getConfigs';
 import getTickers from '../binance/getTickers';
-import filterTickersByVolume from '../binance/filterTickersByVolume';
+import filterTickersByVolume from './utils/filterTickersByVolume';
 import getTickerStats from './getTickerStats';
-import getTimeStart from './getTimeStart';
-import { configsHR, configsMR } from './configsSettings';
+import getTimeStart from './utils/getTimeStart';
+import { configsHR, configsMR } from '../../utils/configsSettings';
 
 const backtest = async (
   customTickers,
   settings,
   binds,
-  minimalVolume,
-  minimalTradesCount,
-  minimalPercentProfitableTrades,
-  minimalProfitPercent,
-  maximalDrawdown,
+  minVolume,
+  minTrades,
+  minPercentProfitable,
+  minProfitPercent,
+  maxDrawdown,
 ) => {
-  const balance = 280;
   const allUsdtTickers = await getTickers('USDT');
   const tickersFilteredByVolume = await filterTickersByVolume(
     (customTickers || allUsdtTickers),
-    minimalVolume,
+    minVolume,
   );
 
   const result = [];
@@ -28,8 +27,33 @@ const backtest = async (
   console.log('START: Backtest');
   console.time('BACKTEST TIME: ');
 
-  // eslint-disable-next-line no-restricted-syntax
-  for await (const setting of settings) {
+  const backtestTickers = async (tickers, interval, currentConfig, start, end, maxBars) => {
+    const backtestTicker = async (ticker) => {
+      const bestConfig = await getTickerStats(
+        ticker,
+        interval,
+        binds,
+        currentConfig,
+        start,
+        end,
+        maxBars,
+        minTrades,
+        minPercentProfitable,
+        minProfitPercent,
+        maxDrawdown,
+      );
+
+      if (bestConfig) return result.push(bestConfig);
+
+      return null;
+    };
+
+    const promise = tickers.map(backtestTicker);
+
+    await Promise.all(promise);
+  };
+
+  const backtestSetting = async (setting) => {
     const {
       interval, range, configs, maxBars,
     } = setting;
@@ -50,34 +74,24 @@ const backtest = async (
       default: currentConfig = getConfigs(configsHR);
     }
 
-    console.log(`Backtesting: ${interval} for ${currentConfig.length} configs`);
+    // console.log(`Backtesting: ${interval} for ${currentConfig.length} configs`);
 
-    // eslint-disable-next-line no-restricted-syntax
-    for await (const ticker of tickersFilteredByVolume) {
-      const bestConfig = await getTickerStats(
-        balance,
-        ticker,
-        interval,
-        binds,
-        currentConfig,
-        start,
-        end,
-        minimalTradesCount,
-        maxBars,
-        minimalPercentProfitableTrades,
-        minimalProfitPercent,
-        maximalDrawdown,
-      );
+    await backtestTickers(tickersFilteredByVolume, interval, currentConfig, start, end, maxBars);
+  };
 
-      if (bestConfig) result.push(bestConfig);
-    }
-  }
+  const promise = settings.map(backtestSetting);
+
+  await Promise.all(promise);
 
   console.log('FINISH: Backtest');
   console.timeEnd('BACKTEST TIME: ');
 
   if (result.length > 0) {
-    console.log(result.slice(0, 20));
+    result.sort((a, b) => b.rate - a.rate);
+    result.slice(0, 20).forEach((item) => {
+      console.log(item);
+      console.log(getLexxLink(item));
+    });
   } else {
     console.log('Нет подходящих конфигов :(');
   }

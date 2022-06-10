@@ -1,4 +1,4 @@
-const getConfigRate = (stats) => (
+const getConfigStatsRate = (stats) => (
   +Number(
     stats.buy * 0.1
   + (stats.sell / stats.stop) * 0.2
@@ -13,4 +13,4 @@ const getConfigRate = (stats) => (
   ).toFixed(2)
 );
 
-export default getConfigRate;
+export default getConfigStatsRate;

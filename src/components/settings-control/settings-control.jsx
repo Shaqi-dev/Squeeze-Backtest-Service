@@ -13,7 +13,7 @@ export default function SettingsControl({ activeSettings }) {
 
   const handleStartBacktest = () => {
     backtest(
-      null,
+      ['LITUSDT', 'EPXUSDT', 'LUNAUSDT'],
       activeSettings,
       binds,
       minimalVolume,

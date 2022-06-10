@@ -1,5 +1,5 @@
 import getSymbols from './getSymbols';
-import tickersBlacklist from './tickersBlacklist';
+import blacklist from '../../utils/tickersBlacklist';
 
 const getTickers = async (quoteAsset) => {
   const symbols = await getSymbols();
@@ -9,15 +9,15 @@ const getTickers = async (quoteAsset) => {
     if (
       item.quoteAsset === quoteAsset
       && item.status === 'TRADING'
-      && tickersBlacklist.includes(item.symbol) === false
+      && blacklist.includes(item.symbol) === false
     ) {
       tickers.push(item.symbol);
     }
   });
 
-  const sorted = tickers.sort();
+  tickers.sort();
 
-  return sorted;
+  return tickers;
 };
 
 export default getTickers;

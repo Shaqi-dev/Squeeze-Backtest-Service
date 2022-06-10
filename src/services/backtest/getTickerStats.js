@@ -1,9 +1,7 @@
-import getKlinesData from '../binance/getKlinesData';
-import getConfigStats from './getConfigStats';
-import getConfigRate from './getConfigRate';
+import getKlines from '../binance/getKlines';
+import getBindBestResult from './getBindBestResult';
 
-const getTrades = async (
-  balance,
+const getTickerStats = async (
   ticker,
   interval,
   binds,
@@ -11,65 +9,45 @@ const getTrades = async (
   startTime,
   endTime,
   barsToSell = 5,
-  minimalTradesCount = 5,
-  minimalPercentProfitableTrades = 20,
-  minimalProfitPercent = 0,
-  maximalDrawdown = -20,
-// eslint-disable-next-line consistent-return
+  minTrades = 5,
+  minPercentProfitable = 20,
+  minProfitPercent = 0,
+  maxDrawdown = -20,
 ) => {
-  const fees = 0.075 / 100;
-  const data = await getKlinesData(ticker, interval, startTime, endTime);
   const result = [];
 
-  binds.forEach((bind) => {
-    const bindResult = [];
+  const data = await getKlines(ticker, interval, startTime, endTime);
 
-    configs.some((config) => {
-      const stats = getConfigStats(data, config, bind, fees, balance);
-      const {
-        closed,
-        percentProfitable,
-        profitPercent,
-        maxDrawdawn,
-        maxBarsToSell,
-      } = stats;
+  const backtestBind = async (bind) => {
+    const bindResult = await getBindBestResult(
+      data,
+      ticker,
+      interval,
+      bind,
+      configs,
+      barsToSell,
+      minTrades,
+      minPercentProfitable,
+      minProfitPercent,
+      maxDrawdown,
+    );
 
-      // Stop configs backtest if trades count < minimal required
-      if (closed < minimalTradesCount) {
-        return true;
-      }
+    if (bindResult) return result.push(bindResult);
 
-      // Filter bad configs
-      if (maxBarsToSell > barsToSell
-          || percentProfitable < minimalPercentProfitableTrades
-          || profitPercent < minimalProfitPercent
-          || maxDrawdawn < maximalDrawdown) {
-        return false;
-      }
+    return null;
+  };
 
-      const rate = getConfigRate(stats);
+  const promises = binds.map(backtestBind);
 
-      return bindResult.push({
-        ticker, interval, bind, ...stats, rate,
-      });
-    });
-
-    // Sort and push current bind results
-    if (bindResult.length > 0) {
-      bindResult.sort((a, b) => b.rate - a.rate);
-      bindResult.forEach((item) => result.push(item));
-    }
-  });
+  await Promise.all(promises);
 
   if (result.length === 0) {
-    console.log(`- - - ${ticker} ${interval} don't have a good configs - - -`);
-  } else {
-    result.sort((a, b) => b.rate - a.rate);
-
-    const best = result[0];
-    console.log(best);
-    return best;
+    // console.log(`${ticker} ${interval} don't have a good configs`);
+    return null;
   }
+
+  result.sort((a, b) => b.rate - a.rate);
+  return result[0];
 };
 
-export default getTrades;
+export default getTickerStats;

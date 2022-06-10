@@ -4,22 +4,22 @@ import {
   setActive, setRange, setConfigs, setMaxBars,
 } from '../../features/settings/settingsSlice';
 import { CheckboxWithLabel, BasicSelect, BasicNumberField } from '../forms';
-import './settings-intervals.css';
+import './BacktestSettings.scss';
 
-function SettingsIntervals({ setting, forceUpdate }) {
+function BacktestSettings({ setting, forceUpdate }) {
   const {
     interval, range, configs, maxBars,
   } = setting;
   const dispatch = useDispatch();
 
   const rangeOptions = [
-    { value: 'last12h', label: '12 hours' },
-    { value: 'last24h', label: '24 hours' },
-    { value: 'last48h', label: '48 hours' },
-    { value: 'last72h', label: '72 hours' },
-    { value: 'last1w', label: '1 week' },
-    { value: 'last2w', label: '2 weeks' },
-    { value: 'last4w', label: '4 weeks' },
+    { value: '12h', label: '12 hours' },
+    { value: '24h', label: '24 hours' },
+    { value: '48h', label: '48 hours' },
+    { value: '72h', label: '72 hours' },
+    { value: '1w', label: '1 week' },
+    { value: '2w', label: '2 weeks' },
+    { value: '4w', label: '4 weeks' },
   ];
 
   const configOptions = [
@@ -87,4 +87,4 @@ function SettingsIntervals({ setting, forceUpdate }) {
   );
 }
 
-export default SettingsIntervals;
+export default BacktestSettings;

@@ -1,10 +1,10 @@
-import getVolume from './getVolume';
+import getVolume from '../../binance/getVolume';
 
 const filterTickersByVolume = async (tickers, minimalVolume) => {
   const result = [];
 
-  console.time('FILTERING TIME: ');
-  console.log('START: filtering tickers by volume');
+  // console.time('FILTERING TIME: ');
+  // console.log('START: filtering tickers by volume');
 
   const checkVolume = async (ticker) => {
     const volume = await getVolume(ticker);
@@ -16,11 +16,11 @@ const filterTickersByVolume = async (tickers, minimalVolume) => {
 
   const promises = tickers.map(checkVolume);
 
-  await Promise.all(promises).then(() => {
-    console.log('FINISH: filtering tickers by volume');
-    console.log(`RESULT: ${result.length} tickers`);
-    console.timeEnd('FILTERING TIME: ');
-  });
+  await Promise.all(promises);
+
+  // console.log('FINISH: filtering tickers by volume');
+  // console.log(`RESULT: ${result.length} tickers`);
+  // console.timeEnd('FILTERING TIME: ');
 
   return result;
 };

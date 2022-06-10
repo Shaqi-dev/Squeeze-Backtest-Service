@@ -1,13 +1,13 @@
-import Trade from './Trade';
+import Trade from './utils/Trade';
 
 const getConfigStats = (
   data,
   config,
   bind,
-  fees,
-  balance,
 ) => {
   const [buyPercent, sellPercent, stopPercent] = config;
+  const balance = 280;
+  const fees = 0.075 / 100;
   const trade = new Trade(fees, balance, buyPercent, sellPercent, stopPercent);
 
   // Backtest current config for each bar
