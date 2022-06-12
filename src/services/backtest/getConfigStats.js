@@ -1,4 +1,5 @@
-import Trade from './utils/Trade';
+import TradesStats from './utils/TradesStats';
+import getBindPrice from './utils/getBindValue';
 
 const getConfigStats = (
   data,
@@ -8,72 +9,62 @@ const getConfigStats = (
   const [buyPercent, sellPercent, stopPercent] = config;
   const balance = 280;
   const fees = 0.075 / 100;
-  const trade = new Trade(fees, balance, buyPercent, sellPercent, stopPercent);
+  const stats = new TradesStats(fees, balance, buyPercent, sellPercent, stopPercent);
 
   // Backtest current config for each bar
   data.forEach((bar, i, arr) => {
-    const [openTime,, high, low, close] = bar;
+    const [openTime, open, high, low, close, closeTime] = bar;
 
+    // Starting from second bar
     if (i > 0) {
-      trade.startDate = openTime;
       const prevBar = arr[i - 1];
-
-      let bindValue;
-
-      switch (bind.toLowerCase()) {
-        case 'o':
-          bindValue = +prevBar[1];
-          break;
-        case 'h':
-          bindValue = +prevBar[2];
-          break;
-        case 'l':
-          bindValue = +prevBar[3];
-          break;
-        case 'c':
-          bindValue = +prevBar[4];
-          break;
-        case 'hl':
-          bindValue = ((+prevBar[2] + +prevBar[3]) / 2);
-          break;
-        case 'oc':
-          bindValue = ((+prevBar[1] + +prevBar[4]) / 2);
-          break;
-        default: bindValue = ((+prevBar[1] + +prevBar[4]) / 2);
-      }
-
-      const buy = bindValue - bindValue * (buyPercent / 100);
+      const bindPrice = getBindPrice(bind, prevBar);
+      const buy = bindPrice - bindPrice * (buyPercent / 100);
       const sell = buy * (1 + (sellPercent / 100));
       const stop = buy - buy * (stopPercent / 100);
 
-      const getModifiedBar = (item) => [
-        (new Date(item[0])).toLocaleString(),
-        ...item.slice(1, 6),
-        (new Date(item[6] + 1)).toLocaleString(),
-        Number(buy).toFixed(item[1].length - 2),
-        Number(sell).toFixed(item[1].length - 2),
-        Number(stop).toFixed(item[1].length - 2),
+      const openTimeString = (new Date(openTime)).toLocaleString();
+      const closeTimeString = (new Date(closeTime + 1)).toLocaleString();
+      const getRoundPrice = (price) => Number(price).toFixed(open.length - 2);
+      const modifiedBar = [
+        openTimeString,
+        ...bar.slice(1, 5),
+        closeTimeString,
+        getRoundPrice(buy),
+        getRoundPrice(sell),
+        getRoundPrice(stop),
       ];
 
-      if (trade.tradeIsOpen) {
-        trade.continueTrade();
-        if (+low <= +trade.stopOrder) {
-          trade.stopTrade(openTime, getModifiedBar(bar));
-        } else if (+high >= +trade.sellOrder) {
-          trade.closeTrade(openTime, getModifiedBar(bar));
+      const { currentTrade } = stats;
+      const stopOrder = currentTrade && +currentTrade.getStopOrder();
+      const sellOrder = currentTrade && +currentTrade.getSellOrder();
+
+      const buyCondition = +low <= +buy;
+      const sellCondition = +high >= sellOrder;
+      const instantSellCondition = +close >= sell;
+      const stopCondition = +low <= stopOrder;
+      const instantStopCondition = +low <= stop;
+
+      // Main trading logic
+      if (currentTrade) {
+        stats.continue();
+        if (stopCondition) {
+          stats.closeTrade('STOP', openTimeString, modifiedBar);
+        } else if (sellCondition) {
+          stats.closeTrade('SELL', openTimeString, modifiedBar);
         }
-      } else if (!trade.tradeIsOpen && +low <= +buy) {
-        trade.openTrade(openTime, buy, sell, stop, getModifiedBar(bar));
-        if (+low <= +trade.stopOrder) {
-          trade.stopTrade(openTime, getModifiedBar(bar));
-        } else if (+close >= +trade.sellOrder) {
-          trade.closeTrade(openTime, getModifiedBar(bar));
+      } else if (currentTrade === null && buyCondition) {
+        stats.openTrade(openTimeString, buy, sell, stop, modifiedBar);
+        if (instantStopCondition) {
+          stats.closeTrade('STOP', openTimeString, modifiedBar);
+        } else if (instantSellCondition) {
+          stats.closeTrade('SELL', openTimeString, modifiedBar);
         }
       }
     }
   });
 
-  return trade.returnStats();
+  return stats.returnStats();
 };
 
 export default getConfigStats;

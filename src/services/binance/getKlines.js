@@ -25,7 +25,7 @@ const getKlines = async (
 
       const { data } = res;
 
-      data.forEach((item) => klines.push(item.slice(0, 7)));
+      data.forEach((item) => klines.push([...item.slice(0, 5), item[6]]));
 
       // Update current start time to last bar time in the part of data
       currentStartTime = data[data.length - 1][6] + 1;

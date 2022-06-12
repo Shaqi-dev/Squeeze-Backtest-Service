@@ -4,24 +4,19 @@ import backtest from '../../services/backtest';
 import './settings-control.css';
 
 export default function SettingsControl({ activeSettings }) {
-  const binds = ['O', 'H', 'L', 'C', 'HL', 'OC'];
-  const minimalVolume = 10;
-  const minimalTradesCount = 5;
-  const minimalPercentProfitableTrades = 60;
-  const minimalProfitPercent = 0;
-  const maximalDrawdown = -5;
+  const backtestSettings = {
+    tickers: null,
+    activeSettings,
+    binds: ['O', 'H', 'L', 'C', 'HL', 'OC'],
+    minVolume: 10,
+    minTrades: 5,
+    minPercentProfitable: 60,
+    minProfitPercent: 0,
+    maxDrawdown: -5,
+  };
 
   const handleStartBacktest = () => {
-    backtest(
-      ['LITUSDT', 'EPXUSDT', 'LUNAUSDT'],
-      activeSettings,
-      binds,
-      minimalVolume,
-      minimalTradesCount,
-      minimalPercentProfitableTrades,
-      minimalProfitPercent,
-      maximalDrawdown,
-    );
+    backtest(backtestSettings);
   };
 
   const handleCheckSettings = () => {

@@ -25,6 +25,8 @@ const getBindBestResult = async (
       maxBarsToSell,
     } = stats;
 
+    // console.log(stats);
+
     // Stop configs backtest if trades count < minimal required
     if (closed < minTrades) {
       return true;

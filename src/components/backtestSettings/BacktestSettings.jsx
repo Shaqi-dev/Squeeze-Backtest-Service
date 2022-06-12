@@ -53,7 +53,7 @@ function BacktestSettings({ setting, forceUpdate }) {
         key={`${interval}-active`}
         label={interval}
         className="settings-intervals__item"
-        onChange={(e) => handleChangeCheckbox(e)}
+        onChange={handleChangeCheckbox}
       />
       <BasicSelect
         key={`${interval}-range`}
@@ -61,7 +61,7 @@ function BacktestSettings({ setting, forceUpdate }) {
         className="settings-intervals__item"
         defaultValue={range}
         minWidth={120}
-        onChange={(e) => handleChangeRange(e)}
+        onChange={handleChangeRange}
       />
       <BasicSelect
         key={`${interval}-configs`}
@@ -69,7 +69,7 @@ function BacktestSettings({ setting, forceUpdate }) {
         className="settings-intervals__item"
         defaultValue={configs}
         minWidth={120}
-        onChange={(e) => handleChangeConfigs(e)}
+        onChange={handleChangeConfigs}
       />
       <BasicNumberField
         key={`${interval}-max-bars`}
@@ -81,7 +81,7 @@ function BacktestSettings({ setting, forceUpdate }) {
         minLength={1}
         maxLength={4}
         step={1}
-        onChange={(e) => handleChangeMaxBars(e)}
+        onChange={handleChangeMaxBars}
       />
     </form>
   );

@@ -6,19 +6,20 @@ import getTickerStats from './getTickerStats';
 import getTimeStart from './utils/getTimeStart';
 import { configsHR, configsMR } from '../../utils/configsSettings';
 
-const backtest = async (
-  customTickers,
-  settings,
-  binds,
-  minVolume,
-  minTrades,
-  minPercentProfitable,
-  minProfitPercent,
-  maxDrawdown,
-) => {
-  const allUsdtTickers = await getTickers('USDT');
+const backtest = async (settings) => {
+  const USDTtickers = await getTickers('USDT');
+  const {
+    tickers,
+    binds,
+    activeSettings,
+    minVolume,
+    minTrades,
+    minPercentProfitable,
+    minProfitPercent,
+    maxDrawdown,
+  } = settings;
   const tickersFilteredByVolume = await filterTickersByVolume(
-    (customTickers || allUsdtTickers),
+    (tickers || USDTtickers),
     minVolume,
   );
 
@@ -27,8 +28,45 @@ const backtest = async (
   console.log('START: Backtest');
   console.time('BACKTEST TIME: ');
 
-  const backtestTickers = async (tickers, interval, currentConfig, start, end, maxBars) => {
-    const backtestTicker = async (ticker) => {
+  // const backtestTickers = async (
+  //   currentTickers, interval, currentConfig, start, end, maxBars
+  // ) => {
+  //   const backtestTicker = async (ticker) => {
+  //     const bestConfig = await getTickerStats(
+  //       ticker,
+  //       interval,
+  //       binds,
+  //       currentConfig,
+  //       start,
+  //       end,
+  //       maxBars,
+  //       minTrades,
+  //       minPercentProfitable,
+  //       minProfitPercent,
+  //       maxDrawdown,
+  //     );
+
+  //     if (bestConfig) return result.push(bestConfig);
+
+  //     return null;
+  //   };
+
+  //   const promise = currentTickers.map(backtestTicker);
+
+  //   await Promise.all(promise);
+  // };
+
+  // eslint-disable-next-line no-restricted-syntax
+  const backtestTickers = async (
+    tickersArr,
+    interval,
+    currentConfig,
+    start,
+    end,
+    maxBars,
+  ) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const ticker of tickersArr) {
       const bestConfig = await getTickerStats(
         ticker,
         interval,
@@ -43,17 +81,39 @@ const backtest = async (
         maxDrawdown,
       );
 
-      if (bestConfig) return result.push(bestConfig);
-
-      return null;
-    };
-
-    const promise = tickers.map(backtestTicker);
-
-    await Promise.all(promise);
+      if (bestConfig) result.push(bestConfig);
+    }
   };
+  // const backtestSetting = async (setting) => {
+  //   const {
+  //     interval, range, configs, maxBars,
+  //   } = setting;
 
-  const backtestSetting = async (setting) => {
+  //   const start = getTimeStart(range);
+  //   const end = Date.now();
+
+  //   // Init config
+  //   let currentConfig;
+
+  //   switch (configs) {
+  //     case 'configsHR':
+  //       currentConfig = getConfigs(configsHR);
+  //       break;
+  //     case 'configsMR':
+  //       currentConfig = getConfigs(configsMR);
+  //       break;
+  //     default: currentConfig = getConfigs(configsHR);
+  //   }
+
+  //   await backtestTickers(tickersFilteredByVolume, interval, currentConfig, start, end, maxBars);
+  // };
+
+  // const promise = activeSettings.map(backtestSetting);
+
+  // await Promise.all(promise);
+
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const setting of activeSettings) {
     const {
       interval, range, configs, maxBars,
     } = setting;
@@ -74,14 +134,8 @@ const backtest = async (
       default: currentConfig = getConfigs(configsHR);
     }
 
-    // console.log(`Backtesting: ${interval} for ${currentConfig.length} configs`);
-
     await backtestTickers(tickersFilteredByVolume, interval, currentConfig, start, end, maxBars);
-  };
-
-  const promise = settings.map(backtestSetting);
-
-  await Promise.all(promise);
+  }
 
   console.log('FINISH: Backtest');
   console.timeEnd('BACKTEST TIME: ');
