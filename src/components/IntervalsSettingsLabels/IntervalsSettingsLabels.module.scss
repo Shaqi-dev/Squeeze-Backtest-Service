@@ -1,0 +1,10 @@
+@use '../../scss/variables' as *;
+
+.root {
+  display: grid;
+  grid-template-columns: $grid-template-settings;
+  margin: 0;
+  padding: 20px 0;
+  list-style: none;
+  justify-content: center;
+}

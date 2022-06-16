@@ -1,10 +1,10 @@
 import React from 'react';
-import Backtest from './components/backtest';
+import BacktestSettingsForm from './components/BacktestSettingsForm';
 
 function App() {
   return (
     <div className="App">
-      <Backtest />
+      <BacktestSettingsForm />
     </div>
   );
 }

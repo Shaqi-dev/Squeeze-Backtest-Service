@@ -1,0 +1,9 @@
+@use '../../scss/variables' as *;
+
+.root {
+  display: grid;
+  grid-template-columns: $grid-template-settings;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+}
